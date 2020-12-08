@@ -2,6 +2,8 @@ const express = require("express");
 const jwt = require("jsonwebtoken");
 const cors = require("cors");
 const cookieParser = require("cookie-parser");
+const helmet = require("helmet");
+const xss = require("xss-clean");
 const { sequelize, User } = require("./models");
 const { hashPassword, comparePassword } = require("./hash");
 
@@ -10,6 +12,8 @@ const app = express();
 app.use(express.json());
 app.use(cors());
 app.use(cookieParser());
+app.use(helmet());
+app.use(xss());
 
 app.post("/signup", async (req, res) => {
   const { email, password } = req.body;
@@ -19,10 +23,11 @@ app.post("/signup", async (req, res) => {
 
   if (email && password) {
     jwt.sign({ id }, "secretkey", (err, token) => {
+      res.setHeader("Set-Cookie", [`token=${token}`]);
       return res.json({ token });
     });
   } else {
-    return res.status(402).json({ msg: "Must include email or password" });
+    return res.status(402).json({ msg: "Signup Failed" });
   }
 });
 
@@ -41,10 +46,10 @@ app.post("/login", async (req, res) => {
         return res.json({ token });
       });
     } else {
-      return res.status(403).json({ msg: "Wrong password" });
+      return res.status(403).json({ msg: "Login Failed" });
     }
   } else {
-    return res.status(403).json({ msg: "Email not found" });
+    return res.status(403).json({ msg: "Login Failed" });
   }
 });
 
@@ -59,10 +64,10 @@ app.post("/profile/me", async (req, res) => {
     if (user) {
       return res.json({ email: user.email });
     } else {
-      return res.status(403).json({ msg: "Can't find user" });
+      return res.status(403).json({ msg: "Failed" });
     }
   } else {
-    return res.status(500).json({ msg: "Please include a JWT" });
+    return res.status(500).json({ msg: "Failed" });
   }
 });
 
