@@ -1,7 +1,7 @@
 # user-authentication-test
 
-/frontend - contains the frontend part, it's plain HTML and JavaScript
-/backend - contains the backend part, uses express and sequelize (postgres orm)
+- /frontend - contains the frontend part, it's plain HTML and JavaScript
+- /backend - contains the backend part, uses express and sequelize (postgres orm)
 
 /backend/app.js - handles routes: 
 
@@ -11,10 +11,10 @@ Endpoints:
 - app.post "/profile/me": retrieves user's email
 
 Frontend:
-index.html - Index page
-signup.html - Signup page
-login.html - Login page
+- index.html - Index page
+- signup.html - Signup page
+- login.html - Login page
 
-index.js - Checks if a cookie exists, if it does, call a post request to /profile/me to retrieve the user's email
-signup.js - When signup button is pressed, call a post request to /signup. Put the returned JWT inside a cookie
-login.js - Similar process to signup.js
+- index.js - Checks if a cookie exists, if it does, call a post request to /profile/me to retrieve the user's email
+- signup.js - When signup button is pressed, call a post request to /signup. Put the returned JWT inside a cookie
+- login.js - Similar process to signup.js
