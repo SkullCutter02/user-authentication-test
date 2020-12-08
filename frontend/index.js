@@ -1,5 +1,12 @@
 const userInfo = document.getElementById("user-info");
+const logoutBtn = document.getElementById("logout-btn");
 const token = document.cookie.split("=")[1];
+
+logoutBtn.addEventListener("click", () => {
+  const d = new Date();
+  d.setTime(d.getTime() - 86400 * 1000);
+  document.cookie = `jwt=${""}; expires=${d.toUTCString()}`;
+});
 
 if (token) {
   payload = JSON.parse(atob(token.split(".")[1]));
