@@ -28,6 +28,7 @@ app.post("/signup", async (req, res) => {
 
 app.post("/login", async (req, res) => {
   const { email, password } = req.body;
+
   const user = await User.findOne({
     where: { email: email },
   });
@@ -44,6 +45,24 @@ app.post("/login", async (req, res) => {
     }
   } else {
     return res.status(403).json({ msg: "Email not found" });
+  }
+});
+
+app.post("/profile/me", async (req, res) => {
+  const { payload } = req.body;
+
+  if (payload) {
+    const user = await User.findOne({
+      where: { id: payload.id },
+    });
+
+    if (user) {
+      return res.json({ email: user.email });
+    } else {
+      return res.status(403).json({ msg: "Can't find user" });
+    }
+  } else {
+    return res.status(500).json({ msg: "Please include a JWT" });
   }
 });
 
