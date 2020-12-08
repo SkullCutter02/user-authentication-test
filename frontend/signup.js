@@ -21,12 +21,16 @@ submitBtn.addEventListener("click", (e) => {
     .then((data) => {
       const jwt = data.token;
 
-      if (isChecked) {
-        const d = new Date();
-        d.setTime(d.getTime() + 365 * 24 * 60 * 60 * 1000);
-        document.cookie = `jwt=${jwt}; expires=${d}; secure=true;`;
-      } else if (!isChecked) {
-        document.cookie = `jwt=${jwt}; secure=true;`;
+      if (jwt) {
+        if (isChecked) {
+          const d = new Date();
+          d.setTime(d.getTime() + 365 * 24 * 60 * 60 * 1000);
+          document.cookie = `jwt=${jwt}; expires=${d}; secure=true;`;
+        } else if (!isChecked) {
+          document.cookie = `jwt=${jwt}; secure=true;`;
+        }
+
+        window.location.href = "/user-auth-test/frontend/index.html";
       }
     })
     .catch((err) => console.log(err));

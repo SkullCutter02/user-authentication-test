@@ -1,5 +1,7 @@
 const userInfo = document.getElementById("user-info");
 const logoutBtn = document.getElementById("logout-btn");
+const signupBtn = document.getElementById("signup-btn");
+const loginBtn = document.getElementById("login-btn");
 const token = document.cookie.split("=")[1];
 
 logoutBtn.addEventListener("click", () => {
@@ -21,5 +23,7 @@ if (token) {
     .then((res) => res.json())
     .then((data) => {
       userInfo.innerText = `User: ${data.email}`;
+      signupBtn.style.display = "none";
+      loginBtn.style.display = "none";
     });
 }
